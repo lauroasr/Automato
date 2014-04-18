@@ -29,21 +29,19 @@ public class Autômato {
 			throw new Exception("Estados finais não definidos");
 		}
 		
-		Estado estadoAtual = estadoInicial.próximoEstado(símbolos[0]);
+		Estado estadoAtual = estadoInicial;
 		boolean estáNoEstadoFinal = false;
 		
-		for (int i = 1;; i++) {			
-			if (estadoAtual == null) {
-				throw new Exception("Estado sem ligação para o símbolo " + símbolos[i - 1]);
-			}			
+		for (char símbolo : símbolos) {
+			estadoAtual = estadoAtual.próximoEstado(símbolo);
 			
-			estadoAtual = estadoAtual.próximoEstado(símbolos[i]);
+			if (estadoAtual == null) {
+				throw new Exception("Estado sem ligação para o símbolo " + símbolo);
+			}					
 			
 			for (Estado estadoFinal : estadosFinais) {
 				estáNoEstadoFinal = (estadoAtual == estadoFinal);
-			}
-			
-			if (i == símbolos.length - 1) break;
+			}						
 		}
 		return estáNoEstadoFinal;
 	}
@@ -56,16 +54,15 @@ public class Autômato {
 			throw new Exception("Estados finais não definidos");
 		}
 		
-		Estado estadoAtual = estadoInicial.próximoEstado(símbolos[0]);
+		Estado estadoAtual = estadoInicial;
 		
-		for (int i = 1;; i++) {
-			if (estadoAtual == null) {
-				throw new Exception("Estado sem ligação para o símbolo " + símbolos[i]);
-			}
-			if (i == símbolos.length - 1) break;
+		for (char símbolo : símbolos) {
+			estadoAtual = estadoAtual.próximoEstado(símbolo);
 			
-			estadoAtual = estadoAtual.próximoEstado(símbolos[i]);
-		}		
+			if (estadoAtual == null) {
+				throw new Exception("Estado sem ligação para o símbolo " + símbolo);
+			}				
+		}
 		return estadoAtual;
 	}
 }
